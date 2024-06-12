@@ -22,7 +22,12 @@ function AddTask({
   let [description, SetDescription] = useState("");
   let taskStatus1 = "Not completed";
   let taskStatus2 = "Completed";
+  let [todoTriggerName, SettodoTriggerName] = useState(false);
+  let [todoTriggerDesc, settodoTriggerDesc] = useState(false);
   const Addtodo = () => {
+    SettodoTriggerName(false);
+    settodoTriggerDesc(false);
+
     let id = Data.length ? Data[Data.length - 1].id + 1 : 1;
     let newList = {
       id,
@@ -61,6 +66,8 @@ function AddTask({
                   placeholder="Todo name"
                   value={todoname}
                   onChange={(e) => {
+                    SettodoTriggerName(true);
+
                     SetTodoname(e.target.value);
                   }}
                 />
@@ -72,6 +79,8 @@ function AddTask({
                     placeholder="Todo Description"
                     value={description}
                     onChange={(e) => {
+                      settodoTriggerDesc(true);
+
                       SetDescription(e.target.value);
                     }}
                   />
@@ -79,9 +88,23 @@ function AddTask({
               </Col>
 
               <Col sm={3} className="my-1">
-                <Button className="bg-success" onClick={Addtodo}>
-                  Add Todo
-                </Button>
+                {todoTriggerDesc && todoTriggerName ? (
+                  <Button
+                    className="bg-success"
+                    disabled={false}
+                    onClick={Addtodo}
+                  >
+                    Add Todo
+                  </Button>
+                ) : (
+                  <Button
+                    className="bg-success"
+                    disabled={true}
+                    onClick={Addtodo}
+                  >
+                    Add Todo
+                  </Button>
+                )}
               </Col>
             </Row>
           </Form>
